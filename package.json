@@ -1,0 +1,19 @@
+{
+  "name": "gpt4v-formula-pad",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "dev": "bun server.ts"
+  },
+  "private": true,
+  "dependencies": {
+    "hono": "^4.2.9",
+    "openai": "^4.40.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5"
+  }
+}
