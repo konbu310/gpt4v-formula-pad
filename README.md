@@ -1,5 +1,8 @@
 # GPT-4V Formula Pad
 
+<img src="preview.gif"></img>
+
+
 Setup
 
 ```bash

@@ -117,13 +117,28 @@ export const App: FC = () => {
         <div>
           <h2>Preview</h2>
 
-          <img
-            src={base64}
-            alt={latex}
-            width="400"
-            height="300"
-            style={{ border: "2px solid lightgray", borderRadius: "8px" }}
-          />
+          {base64 ? (
+            <img
+              src={base64}
+              alt=""
+              width="400"
+              height="300"
+              style={{
+                border: "2px solid lightgray",
+                borderRadius: "8px",
+                outline: "none",
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                width: "400px",
+                height: "300px",
+                border: "2px solid lightgray",
+                borderRadius: "8px",
+              }}
+            ></div>
+          )}
         </div>
 
         <div>
@@ -144,7 +159,7 @@ export const App: FC = () => {
             <pre>{latex}</pre>
             {isLoading ? (
               <div className="loader" />
-            ) : (
+            ) : latex !== "" ? (
               <math-field
                 style={{
                   minWidth: 300,
@@ -154,7 +169,7 @@ export const App: FC = () => {
               >
                 {latex}
               </math-field>
-            )}
+            ) : null}
           </div>
         </div>
       </div>
