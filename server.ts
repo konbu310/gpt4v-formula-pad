@@ -11,8 +11,9 @@ app.get("/api/hello", (c) => {
 });
 
 app.post("/api/formula", async (c) => {
-  const json = (await c.req.json()) as { formula: string };
-  const latex = await toLatex(json.formula);
+  const json = (await c.req.json()) as { formula: string; model: string };
+  console.log(`use model: ${json.model}`);
+  const latex = await toLatex(json.formula, json.model);
   return c.json({ latex });
 });
 

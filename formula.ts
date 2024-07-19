@@ -1,21 +1,25 @@
 import OpenAI from "openai";
+import type { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions";
 
 const openai = new OpenAI({
   apiKey: Bun.env["OPENAI_API_KEY"],
 });
 
-export async function toLatex(base64String: string): Promise<string> {
+export async function toLatex(
+  base64String: string,
+  model: ChatCompletionCreateParamsBase["model"] = "gpt-4o-mini",
+  lang = "japanese",
+): Promise<string> {
   const resp = await openai.chat.completions.create({
-    model: "gpt-4-vision-preview",
+    model,
     messages: [
-      {
-        role: "system",
-        content:
-          "You are a machine that outputs LaTeX format strings from images with mathematical formulae; outputting non-LaTeX strings and delimiters is prohibited.",
-      },
       {
         role: "user",
         content: [
+          {
+            type: "text",
+            text: String.raw`Convert the following handwritten equation to LaTeX format and return only the equation. Must not include delimiters like \[...\] or $...$. If you can't convert it, please return an error message in ${lang} starting with "ERROR:".`,
+          },
           {
             type: "image_url",
             image_url: {
@@ -27,11 +31,5 @@ export async function toLatex(base64String: string): Promise<string> {
     ],
   });
 
-  const message = resp.choices[0].message.content;
-
-  if (!message) {
-    throw new Error("Failed to convert image to LaTeX");
-  }
-
-  return message;
+  return resp.choices[0].message.content ?? "";
 }
